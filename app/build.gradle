@@ -83,6 +83,9 @@ dependencies {
 
     implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
 
+    // Google Maps
+    implementation 'com.google.android.gms:play-services-maps:15.0.1'
+
     // Timber for logging events
     implementation 'com.jakewharton.timber:timber:4.7.1'
 
