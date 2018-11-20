@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ MIT License
   ~
   ~ Copyright (c) 2018 Eton Otieno
@@ -28,11 +27,28 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/mainFragment">
+    app:startDestination="@id/homeFragment">
 
     <fragment
-        android:id="@+id/mainFragment"
-        android:name="com.eton.voler.ui.MainFragment"
-        android:label="main_fragment"
-        tools:layout="@layout/home_fragment" />
+        android:id="@+id/homeFragment"
+        android:name="com.eton.voler.ui.HomeFragment"
+        android:label="HomeFragment">
+        <action
+            android:id="@+id/action_homeFragment_to_schedulesFragment"
+            app:destination="@id/schedulesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/schedulesFragment"
+        android:name="com.eton.voler.ui.SchedulesFragment"
+        android:label="fragment_schedules"
+        tools:layout="@layout/fragment_schedules">
+        <action
+            android:id="@+id/action_schedulesFragment_to_mapFragment"
+            app:destination="@id/mapFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="com.eton.voler.ui.MapFragment"
+        android:label="fragment_map"
+        tools:layout="@layout/fragment_map" />
 </navigation>
