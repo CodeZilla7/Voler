@@ -23,33 +23,22 @@
  *
  */
 
-package com.eton.voler.api
+package com.eton.voler.ui
 
-import com.eton.voler.BuildConfig
-import com.eton.voler.api.model.LufthansaToken
-import com.eton.voler.api.model.ScheduleResponse
-import retrofit2.Call
-import retrofit2.http.*
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import com.eton.voler.R
 
-interface FlightService {
+class MainActivity : AppCompatActivity() {
 
-    @FormUrlEncoded
-    @POST(Constants.TOKEN_ENDPOINT)
-    fun getToken(
-        @Field("client_id") clientId: String = BuildConfig.LUFTHANSA_API_KEY,
-        @Field("client_secret") clientSecret: String = BuildConfig.LUFTHANSA_SECRET,
-        @Field("grant_type") grantType: String = "client_credentials"
-    ): Call<LufthansaToken>
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.main_activity)
+        if (savedInstanceState == null) {
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.container, MainFragment.newInstance())
+                .commitNow()
+        }
+    }
 
-    //Scheduled flights between given airports on a given date.
-    @GET(Constants.FLIGHT_SCHEDULES)
-    fun getFlightSchedules(
-        @HeaderMap header: Map<String, String>,
-        @Query("origin") origin: String,
-        @Query("destination") destination: String,
-        @Query("fromDateTime") departureDate: String,
-        @Query("directFlights") directFlights: Int = 0,
-        @Query("limit") limit: String = "25",
-        @Query("offset") offset: String
-    ): Call<ScheduleResponse>
 }

@@ -23,33 +23,35 @@
  *
  */
 
-package com.eton.voler.api
+package com.eton.voler.ui
 
-import com.eton.voler.BuildConfig
-import com.eton.voler.api.model.LufthansaToken
-import com.eton.voler.api.model.ScheduleResponse
-import retrofit2.Call
-import retrofit2.http.*
+import androidx.lifecycle.ViewModelProviders
+import android.os.Bundle
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import com.eton.voler.R
 
-interface FlightService {
+class MainFragment : Fragment() {
 
-    @FormUrlEncoded
-    @POST(Constants.TOKEN_ENDPOINT)
-    fun getToken(
-        @Field("client_id") clientId: String = BuildConfig.LUFTHANSA_API_KEY,
-        @Field("client_secret") clientSecret: String = BuildConfig.LUFTHANSA_SECRET,
-        @Field("grant_type") grantType: String = "client_credentials"
-    ): Call<LufthansaToken>
+    companion object {
+        fun newInstance() = MainFragment()
+    }
 
-    //Scheduled flights between given airports on a given date.
-    @GET(Constants.FLIGHT_SCHEDULES)
-    fun getFlightSchedules(
-        @HeaderMap header: Map<String, String>,
-        @Query("origin") origin: String,
-        @Query("destination") destination: String,
-        @Query("fromDateTime") departureDate: String,
-        @Query("directFlights") directFlights: Int = 0,
-        @Query("limit") limit: String = "25",
-        @Query("offset") offset: String
-    ): Call<ScheduleResponse>
+    private lateinit var viewModel: MainViewModel
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        return inflater.inflate(R.layout.main_fragment, container, false)
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
+        // TODO: Use the ViewModel
+    }
+
 }
