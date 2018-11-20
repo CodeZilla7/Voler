@@ -23,30 +23,24 @@
  *
  */
 
-package com.eton.voler.ui
+package com.eton.voler.api.service
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import com.eton.voler.api.Constants
 import com.eton.voler.api.model.ScheduleResponse
-import com.eton.voler.data.Repository
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.Deferred
+import retrofit2.http.GET
+import retrofit2.http.HeaderMap
+import retrofit2.http.Query
 
-class MainViewModel : ViewModel() {
-    private val mainJob = Job()
-    private val uiScope = CoroutineScope(Dispatchers.Main + mainJob)
+interface FlightService {
 
-    private val repository = Repository()
-    private val _responseLiveData = MutableLiveData<ScheduleResponse>()
-    val responseLiveData: LiveData<ScheduleResponse>
-        get() = _responseLiveData
-
-    init {
-        uiScope.launch {
-            _responseLiveData.value = repository.getApiResponse()
-        }
-    }
+    @GET(Constants.FLIGHT_SCHEDULES)
+    fun getFlightSchedules(
+        @Query("origin") origin: String,
+        @Query("destination") destination: String,
+        @Query("fromDateTime") departureDate: String,
+        @Query("offset") offset: String,
+        @Query("directFlights") directFlights: Int = 0,
+        @Query("limit") limit: String = "25"
+    ): Deferred<ScheduleResponse>
 }

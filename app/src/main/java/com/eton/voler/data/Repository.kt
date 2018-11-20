@@ -23,24 +23,15 @@
  *
  */
 
-package com.eton.voler.api
+package com.eton.voler.data
 
+import com.eton.voler.api.LufthansaApi
 import com.eton.voler.api.model.ScheduleResponse
-import kotlinx.coroutines.Deferred
-import retrofit2.http.GET
-import retrofit2.http.HeaderMap
-import retrofit2.http.Query
 
-interface FlightService{
+class Repository() {
 
-    @GET(Constants.FLIGHT_SCHEDULES)
-    fun getFlightSchedules(
-        @HeaderMap header: Map<String, String>,
-        @Query("origin") origin: String,
-        @Query("destination") destination: String,
-        @Query("fromDateTime") departureDate: String,
-        @Query("directFlights") directFlights: Int = 0,
-        @Query("limit") limit: String = "25",
-        @Query("offset") offset: String
-    ): Deferred<ScheduleResponse>
+    suspend fun getApiResponse(): ScheduleResponse {
+        val service = LufthansaApi.getFlightService()
+        return service.getFlightSchedules("", "", "", "").await()
+    }
 }

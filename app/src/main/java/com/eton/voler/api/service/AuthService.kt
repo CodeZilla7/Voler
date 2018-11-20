@@ -23,13 +23,12 @@
  *
  */
 
-package com.eton.voler.api
+package com.eton.voler.api.service
 
 import com.eton.voler.BuildConfig
+import com.eton.voler.api.Constants
 import com.eton.voler.api.model.LufthansaToken
-import com.eton.voler.api.model.ScheduleResponse
 import kotlinx.coroutines.Deferred
-import retrofit2.Call
 import retrofit2.http.*
 
 interface AuthService {

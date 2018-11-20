@@ -23,30 +23,19 @@
  *
  */
 
-package com.eton.voler.ui
+package com.eton.voler.api
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.eton.voler.api.model.ScheduleResponse
-import com.eton.voler.data.Repository
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
+import com.eton.voler.api.model.LufthansaToken
+import okhttp3.Interceptor
+import okhttp3.Response
 
-class MainViewModel : ViewModel() {
-    private val mainJob = Job()
-    private val uiScope = CoroutineScope(Dispatchers.Main + mainJob)
+class AuthenticationInterceptor(private val token: LufthansaToken) : Interceptor {
 
-    private val repository = Repository()
-    private val _responseLiveData = MutableLiveData<ScheduleResponse>()
-    val responseLiveData: LiveData<ScheduleResponse>
-        get() = _responseLiveData
-
-    init {
-        uiScope.launch {
-            _responseLiveData.value = repository.getApiResponse()
-        }
+    override fun intercept(chain: Interceptor.Chain): Response {
+        val request = chain.request().newBuilder()
+            .addHeader("Authorization", "Bearer ${token.access_token}")
+            .addHeader("Accept", "application/json")
+            .build()
+        return chain.proceed(request)
     }
 }
