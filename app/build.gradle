@@ -26,6 +26,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: "androidx.navigation.safeargs"
 
 android {
     compileSdkVersion 28
@@ -84,14 +85,26 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
 
     // Google Maps
-    implementation 'com.google.android.gms:play-services-maps:15.0.1'
+    implementation 'com.google.android.gms:play-services-maps:16.0.0'
 
     // Timber for logging events
     implementation 'com.jakewharton.timber:timber:4.7.1'
 
+    //Dagger
+    implementation "com.google.dagger:dagger:2.16"
+    kapt "com.google.dagger:dagger-compiler:2.16"
+    implementation "com.google.dagger:dagger-android:2.16"
+    implementation "com.google.dagger:dagger-android-support:2.16"
+    kapt "com.google.dagger:dagger-android-processor:2.16"
+
+    // Koin for Android
+    implementation 'org.koin:koin-android:1.0.2'
+    implementation 'org.koin:koin-androidx-scope:1.0.2'
+    implementation 'org.koin:koin-androidx-viewmodel:1.0.2'
+
     // Retrofit for making the network calls
-    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.5.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.10.0'
     implementation "com.google.code.gson:gson:2.8.5"
 
